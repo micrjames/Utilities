@@ -11,7 +11,7 @@ describe("A Utility Class", () => {
 		 dotOp = utility.dot;
 	  });
 	  describe("A Basic Operation", () => {
-		 let result:number;
+		 let result: number;
 		 let dotOp0: number[];
 		 let dotOp1: number[];
 		 describe("Completed", () => {
@@ -36,8 +36,15 @@ describe("A Utility Class", () => {
 			});
 		 });
 		 describe("Throws an Error", () => {
-			test.todo("Should throw an 'Vectors are unequal length' error.");
-			test.todo("Should throw an 'Vectors are not numbers' error.");
+			beforeAll(() => {
+			   dotOp0 = [1, 1];	
+			   dotOp1 = [0];	
+			});
+			test("Should throw an 'Vectors are unequal length' error.", () => {
+			   expect(() => {
+				  dotOp.operator(dotOp0, dotOp1);
+			   }).toThrow("Vectors are unequal length");
+			});
 		 });
 	  });
    });
