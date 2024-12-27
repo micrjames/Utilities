@@ -3,7 +3,7 @@ export class Utilities {
 	  constructor(public superThis: Utilities) {}
 
 	  public operator(a: number[], b: number[]): number {
-		 return -1;
+		 return a.map((_, i) => a[i] * b[i]).reduce((sum, curr) => sum + curr);
 	  }
    }(this);
 }

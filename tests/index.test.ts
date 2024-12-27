@@ -12,13 +12,28 @@ describe("A Utility Class", () => {
 	  });
 	  describe("A Basic Operation", () => {
 		 let result:number;
-		 beforeAll(() => {
-			result = dotOp.operator([0, 0], [0, 0]);
-		 });
+		 let dotOp0: number[];
+		 let dotOp1: number[];
 		 describe("Completed", () => {
-			test.todo("Should exist.");
-			test.todo("Should return a number.");
-			test.todo("Should perform the operation.");
+			let dottedOps: number;
+			beforeAll(() => {
+			   dotOp0 = [1, 1];	
+			   dotOp1 = [1, 0];	
+			   result = dotOp.operator(dotOp0, dotOp1);
+			   dottedOps = dotOp0[0] * dotOp1[0] + dotOp0[1] * dotOp1[1];
+			});
+			test("Should exist.", () => {
+			   expect(dotOp).toBeDefined();
+			});
+			test("Should have a 'result'.", () => {
+			   expect(result).toBeDefined();
+			});
+			test("Should have a result as a number.", () => {
+			   expect(result).toStrictEqual(expect.any(Number));
+			});
+			test("Should perform the operation.", () => {
+			   expect(result).toBe(dottedOps);
+			});
 		 });
 		 describe("Throws an Error", () => {
 			test.todo("Should throw an 'Vectors are unequal length' error.");
