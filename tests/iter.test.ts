@@ -10,21 +10,23 @@ describe("A Utility Class", () => {
 	  let iterOp: typeof utility.iterate;
 	  let sb: StringBuilder;
 	  let iterOpArr: String[];
+	  let iterOpArrSize: number;
+	  let mockCallback: jest.Mock<void, [String, number]>;
+	  let mockCallbackCalls: [String, number][];
 	  beforeAll(() => {
 		 iterOp = utility.iterate;
 		 sb = new StringBuilder();
 		 iterOpArr = ["hello", "olleh"];	
+		 iterOpArrSize = iterOpArr.length;
 	  });
 	  describe("A Basic Operation", () => {
+		 let whichCBArg: number;
 		 describe("Created", () => {
 			test("Should exist.", () => {
 			   expect(iterOp).toBeDefined();
 			});
 		 });
 		 describe("Executed", () => {
-			let mockCallback: jest.Mock<void, [String, number]>;
-			let mockCallbackCalls: [String, number][];
-			let whichCBArg: number;
 			beforeAll(() => {
 			   mockCallback = jest.fn((char, idx) => {
 				  if(idx != 0) sb.appendSp();
@@ -37,9 +39,7 @@ describe("A Utility Class", () => {
 			   mockCallbackCalls = mockCallback.mock.calls;
 			});
 			test("Should have executed 'two' calls.", () => {
-			   const numCalls = mockCallbackCalls.length;
-			   const iterOpArrSize = iterOpArr.length;
-			   expect(numCalls).toBe(iterOpArrSize);
+			   expect(mockCallbackCalls).toHaveLength(iterOpArrSize);
 			});
 			test("Should have as first argument: 'hello'.", () => {
 			   whichCBArg = 0;
@@ -54,12 +54,30 @@ describe("A Utility Class", () => {
 		 });
 		 describe("After Execution.", () => {
 			let sbStr: String;
+			let sbStrs: String[];
 			beforeAll(() => {
-			   sbStr = sb.build();
+			   sbStr = sb.build()
+			   const sbStrSliced = sbStr.slice(1,sbStr.length-1)
+			   const sbStrSlicedAndReplaced = sbStrSliced.replace(/ /, '');
+			   sbStrs = sbStrSlicedAndReplaced.split(',');
 			});
-			test.todo("Should have the same number of strings as the number of arguments.");
-			test.todo("Should have each string the same type as the type of each argument.");
-			test.todo("Should have each string the same as each argument.");
+			test("Should have the same number of strings as the number of arguments.", () => {
+			   expect(sbStrs).toHaveLength(iterOpArrSize);
+			});
+			test("Should have each string the same type as the type of each argument.", () => {
+			   sbStrs.forEach((sbStr, whichCBArg) => {
+				  const iterOpArg = mockCallbackCalls[whichCBArg][0];
+				  const iterOpArgType = typeof iterOpArg;
+				  const sbStrType = typeof sbStr;
+				  expect(sbStrType).toEqual(iterOpArgType);
+			   });
+			});
+			test("Should have each string the same as each argument.", () => {
+			   sbStrs.forEach((sbStr, whichCBArg) => {
+				  const iterOpArg = mockCallbackCalls[whichCBArg][0];
+				  expect(sbStr).toEqual(iterOpArg);
+			   });
+			});
 		 });
 	  });
    });
