@@ -17,4 +17,15 @@ export class Utilities {
 		 }
 	  }
    }(this);
+   public utils = new class {
+	  constructor(public superThis: Utilities) {}
+
+	  public countOccurrences(arr: number[]): {} { 
+		 return arr.reduce((acc, val) => {
+			acc[val] = (acc[val] || 0) + 1;
+			return acc;
+		 }, {});
+	  }
+
+   }(this);
 }
