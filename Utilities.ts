@@ -1,3 +1,5 @@
+import { countedOccurrences } from "./types";
+
 export class Utilities {
    public dot = new class {
 	  constructor(public superThis: Utilities) {}
@@ -20,7 +22,7 @@ export class Utilities {
    public utils = new class {
 	  constructor(public superThis: Utilities) {}
 
-	  public countOccurrences(arr: number[]): {} { 
+	  public countOccurrences(arr: number[]): countedOccurrences<number> { 
 		 return arr.reduce((acc, val) => {
 			acc[val] = (acc[val] || 0) + 1;
 			return acc;
